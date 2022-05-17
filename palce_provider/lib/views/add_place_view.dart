@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/image_input_widget.dart';
+
 class AddPlaceView extends StatefulWidget {
   static const routName = '/add-place';
   @override
@@ -31,8 +33,7 @@ class _AddPlaceViewState extends State<AddPlaceView> {
                     SizedBox(
                       height: 10,
                     ),
-                    Container(),
-                    TextButton(onPressed: () {}, child: null)
+                    ImageInput(),
                   ],
                 ),
               ),
