@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../views/places_list_view.dart';
 import './views/add_place_view.dart';
 import './providers/great_places.dart';
+import './views/google_maps.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print('building main');
     return ChangeNotifierProvider.value(
       value: GreatPlaces(),
       child: MaterialApp(
