@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../widgets/image_input_widget.dart';
 import '../providers/great_places.dart';
+import '../widgets/location_input.dart';
+import '../models/place.dart';
 
 class AddPlaceView extends StatefulWidget {
   static const routName = '/add-place';
@@ -17,22 +20,31 @@ class _AddPlaceViewState extends State<AddPlaceView> {
 
   File _pickedImage;
 
+  PlaceLocation _pickedLocation;
+
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
+  void _selectPlace(double lat, double lon) {
+    _pickedLocation = PlaceLocation(latitude: lat, longtude: lon);
+  }
+
   void _savePlace() {
-    if (_pickedImage == null || _inputController.text.isEmpty) {
+    if (_pickedImage == null ||
+        _inputController.text.isEmpty ||
+        _pickedLocation == null) {
       return;
     }
-    Provider.of<GreatPlaces>(context, listen: false)
-        .addPlace(title: _inputController.text, image: _pickedImage);
+    Provider.of<GreatPlaces>(context, listen: false).addPlace(
+        title: _inputController.text,
+        image: _pickedImage,
+        pickedLocation: _pickedLocation);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('building add place');
     return Scaffold(
       appBar: AppBar(
         title: Text('Add new place'),
@@ -53,7 +65,13 @@ class _AddPlaceViewState extends State<AddPlaceView> {
                     SizedBox(
                       height: 10,
                     ),
-                    ImageInput(_selectImage),
+                    ImageInput(
+                      _selectImage,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    LocationInput(_selectPlace),
                   ],
                 ),
               ),
